@@ -24,6 +24,8 @@ class Game {
       p2: { y: 0, error: 0 }
     };
     this.keys = new Set();
+    this.up = false;
+    this.down = false;
     this.width = 0;
     this.height = 0;
     this.resetTimeout = null;
@@ -51,6 +53,9 @@ class Game {
     window.addEventListener('resize', () => this.handleResize());
     window.addEventListener('keydown', (e) => this.handleKeyDown(e));
     window.addEventListener('keyup', (e) => this.keys.delete(e.code));
+    window.addEventListener("gamepadconnected", (e) => {
+      console.log("Connected:", e.gamepad);
+    });
   }
 
   handleResize() {
@@ -76,7 +81,7 @@ class Game {
 
   handleKeyDown(e) {
     this.keys.add(e.code);
-    const isP1 = ['KeyW', 'KeyS'].includes(e.code);
+    const isP1 = this.up || this.down;
     const isP2 = ['ArrowUp', 'ArrowDown'].includes(e.code);
 
     if (isP1) this.p1Human = true;
@@ -92,14 +97,31 @@ class Game {
     }
   }
 
+  readGamePad() {
+    const gp = navigator.getGamepads()[0];
+    if (!gp) return;
+
+    this.up = gp.buttons[0]?.pressed;
+    this.down = gp.buttons[1]?.pressed;
+
+    const isP1 = this.up || this.down;
+
+    if (isP1) this.p1Human = true;
+
+    if (this.gameState === 'IDLE' && (isP1)) {
+      this.gameState = 'PLAYING';
+      this.idleOverlay.classList.add('hidden');
+    }
+  }
+
   update() {
     if (this.gameState !== 'PLAYING') return;
 
     const ps = 15;
     // P1
     if (this.p1Human) {
-      if (this.keys.has('KeyW')) this.paddles.p1.y -= ps;
-      if (this.keys.has('KeyS')) this.paddles.p1.y += ps;
+      if (this.up) this.paddles.p1.y -= ps;
+      if (this.down) this.paddles.p1.y += ps;
     } else {
       const b = this.balls.filter(b => b.active && b.dx < 0).sort((a, b) => a.x - b.x)[0];
       if (b) {
@@ -245,8 +267,22 @@ class Game {
   loop() {
     this.update();
     this.draw();
+    this.readGamePad();
     requestAnimationFrame(() => this.loop());
   }
 }
 
 new Game();
+
+// setInterval(() => {
+//   const gp = navigator.getGamepads()[0];
+//   if (!gp) return;
+
+//   gp.buttons.forEach((b, i) => {
+//     if (b.pressed) console.log("Button:", i);
+//   });
+
+//   gp.axes.forEach((a, i) => {
+//     if (Math.abs(a) > 0.1) console.log("Axis", i, a);
+//   });
+// }, 300);
