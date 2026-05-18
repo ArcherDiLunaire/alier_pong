@@ -4,64 +4,64 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Alier Pong</title>
+  <title>Block Breaker</title>
+  <link rel="stylesheet" href="src/style.scss" />
 </head>
 
 <body>
   <div id="game-root">
-    <div class="bg-blobs">
-      <div class="blob-1"></div>
-      <div class="blob-2"></div>
-    </div>
+    <!-- <div class="bg-blobs">
+        <div class="blob-1"></div>
+        <div class="blob-2"></div>
+      </div> -->
     <div class="dot-grid-overlay"></div>
 
     <div class="hud">
-      <div class="score-container">
-        <span class="label">Puntos</span>
-        <div id="score" class="score">00</div>
+      <div class="hud-container">
+        <!-- <div class="stat-item">
+          <span class="label">Reciclados</span>
+          <div id="blocks-count" class="value">0</div>
+        </div> -->
+
+        <div class="score-center stat-item">
+          <span class="label">Reciclados</span>
+          <div id="blocks-count" class="value">00</div>
+        </div>
+
+        <div class="right-stats">
+          <div class="stat-item">
+            <span class="label">polyAl</span>
+            <div id="polyAl-count" class="value">0g</div>
+          </div>
+          <div class="stat-item">
+            <span class="label">Papel</span>
+            <div id="papel-count" class="value">0g</div>
+          </div>
+        </div>
       </div>
+      <div id="fps-counter"
+        style="position: fixed; bottom: 2rem; right: 2rem; font-family: var(--font-mono); font-size: 10px; color: rgba(255,255,255,0.3); letter-spacing: 0.1em; pointer-events: none;">
+        FPS: 0</div>
     </div>
 
     <div class="canvas-container" id="canvas-container">
       <canvas id="game-canvas"></canvas>
 
-      <div id="idle-overlay" class="overlay idle">
+      <div id="idle-overlay" class="overlay">
         <div class="waiting-hint">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"
             stroke-linecap="round" stroke-linejoin="round">
             <polygon points="5 3 19 12 5 21 5 3"></polygon>
           </svg>
-          Mueve un joystick para jugar...
+          Mueve el joystick para jugar...
         </div>
-        <!-- <div class="card">
-            <h1>DUAL PONG</h1>
-            <div class="controls-grid">
-              <div class="control-item">
-                <div class="key-hint">WASD</div>
-                <p class="p1">Player 1</p>
-              </div>
-              <div class="divider"></div>
-              <div class="control-item">
-                <div class="key-hint">ARROWS</div>
-                <p id="p2-hint" class="p2">BOT ASSIST</p>
-              </div>
-            </div>
-            <p class="description">
-              Two balls. High speed. Pure reflex.<br />
-              <span class="italic-hint">Press any movement key to begin.</span>
-            </p>
-            <div class="waiting-hint">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
-              Waiting for Input
-            </div>
-          </div> -->
       </div>
 
       <div id="gameover-overlay" class="overlay gameover hidden">
         <div class="gameover-content">
-          Por cada 
-          <div class="final-score">0</div> envases,</br> ALIER recycla <div class="final-score">0</div> envases <br>
-          <p> en <span id="polyAl">0</span>kg de polyAL y <span id="papel">0</span>kg de Papel.</p>
+          Por cada
+          <div class="final-score" id="final-blocks">0</div> envases,</br> ALIER recycla <div class="final-score" id="final-blocks">0</div> envases <br>
+          <p> en <span id="final-polyAl">0</span> de polyAL y <span id="final-papel">0</span> de Papel.</p>
           <div class="timer-container">
             <div class="progress-bar">
               <div id="progress-fill" class="progress-fill"></div>
@@ -71,10 +71,11 @@
         </div>
       </div>
     </div>
-
-    <div class="edge-glow"></div>
   </div>
-  <script type="module" src="/src/main.js"></script>
+
+  <div class="edge-glow"></div>
+  </div>
+  <script type="module" src="/src/game.ts"></script>
 </body>
 
 </html>
