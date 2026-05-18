@@ -181,7 +181,7 @@ body {
 
   &.gameover {
     backdrop-filter: blur(24px);
-    background-color: rgba(0, 0, 0, 0.3);
+    background-color: rgba(0, 0, 0, 0.6);
   }
 }
 
@@ -257,7 +257,7 @@ body {
   .final-score {
     font-size: 3rem;
     font-weight: 900;
-    color: $accent-blue;
+    color: $accent-red;
     display: inline-block;
     text-align: center;
   }

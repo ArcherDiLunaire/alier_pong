@@ -8,10 +8,11 @@ const MAX_SPEED = 15;
 const RESET_DELAY = 10000; // 10 seconds
 
 const BRICK_ROWS = 5;
-const BRICK_COLS = 10;
+const BRICK_COLS = 5;
 const BRICK_PADDING = 10;
 const BRICK_OFFSET_TOP = 100;
 const BRICK_OFFSET_LEFT = 40;
+const BRICK_HEIGHT = 50;
 
 interface FloatingText {
   x: number;
@@ -137,7 +138,7 @@ class Game {
     this.bricks = [];
     const availableWidth = this.width - BRICK_OFFSET_LEFT * 2;
     const brickWidth = (availableWidth - (BRICK_COLS - 1) * BRICK_PADDING) / BRICK_COLS;
-    const brickHeight = 25;
+    const brickHeight = BRICK_HEIGHT;
 
     for (let r = 0; r < BRICK_ROWS; r++) {
       for (let c = 0; c < BRICK_COLS; c++) {
