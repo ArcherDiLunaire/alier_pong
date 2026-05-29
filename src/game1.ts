@@ -1,13 +1,13 @@
 // Constants
 const PADDLE_WIDTH = 150;
-const PADDLE_HEIGHT = 20;
-const BALL_RADIUS = 14;
+const PADDLE_HEIGHT = 15;
+const BALL_RADIUS = 15;
 const INITIAL_BALL_SPEED = 5;
 const SPEED_INCREMENT = 0.002;
 const MAX_SPEED = 15;
 const RESET_DELAY = 10000; // 10 seconds
 
-const BRICK_ROWS = 5;
+const BRICK_ROWS = 4;
 const BRICK_COLS = 5;
 const BRICK_PADDING = 10;
 const BRICK_OFFSET_TOP = 100;
@@ -41,6 +41,9 @@ class Game {
   private blocksCount: number = 0;
   private polyAlCount: number = 0;
   private papelCount: number = 0;
+
+  private polyAlConversion: number = 9.6; // grams per brick
+  private papelConversion: number = 22.4; // grams per brick
 
   private gameState: 'IDLE' | 'PLAYING' | 'GAMEOVER' = 'IDLE';
   
@@ -292,8 +295,10 @@ class Game {
 
     if (brokenThisFrame > 0) {
       this.blocksCount += brokenThisFrame;
-      this.polyAlCount += 10 * brokenThisFrame;
-      this.papelCount += 50 * brokenThisFrame;
+      this.polyAlCount += this.polyAlConversion * brokenThisFrame;
+      this.papelCount += this.papelConversion * brokenThisFrame;
+      this.polyAlCount = parseFloat(this.polyAlCount.toFixed(1));
+      this.papelCount = parseFloat(this.papelCount.toFixed(1));
       this.updateHUD();
       this.addFloatingPoint(collisionX, collisionY, brokenThisFrame);
     }
@@ -313,8 +318,8 @@ class Game {
   }
 
   private addFloatingPoint(x: number, y: number, count: number) {
-    const polyAl = 10 * count;
-    const papel = 50 * count;
+    const polyAl = this.polyAlConversion * count;
+    const papel = this.papelConversion * count;
     
     this.floatingTexts.push({
       x: x,
@@ -365,7 +370,7 @@ class Game {
     // Draw Paddle
     this.ctx.fillStyle = '#fff';
     this.ctx.beginPath();
-    this.ctx.roundRect(this.paddleX, this.height - 40 - PADDLE_HEIGHT, PADDLE_WIDTH, PADDLE_HEIGHT, 10);
+    this.ctx.rect(this.paddleX, this.height - 40 - PADDLE_HEIGHT, PADDLE_WIDTH, PADDLE_HEIGHT);
     this.ctx.fill();
     
     // Paddle border

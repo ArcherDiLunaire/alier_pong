@@ -1,81 +1,138 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="es">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Block Breaker</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Recicla con Alier</title>
   <link rel="stylesheet" href="src/style.scss" />
+  <script type="module" src="/src/game.js"></script>
 </head>
 
 <body>
-  <div id="game-root">
-    <!-- <div class="bg-blobs">
-        <div class="blob-1"></div>
-        <div class="blob-2"></div>
-      </div> -->
-    <div class="dot-grid-overlay"></div>
-
-    <div class="hud">
-      <div class="hud-container">
-        <!-- <div class="stat-item">
-          <span class="label">Reciclados</span>
-          <div id="blocks-count" class="value">0</div>
-        </div> -->
-
-        <div class="score-center stat-item">
-          <span class="label">Reciclados</span>
-          <div id="blocks-count" class="value">00</div>
-        </div>
-
-        <div class="right-stats">
-          <div class="stat-item">
-            <span class="label">polyAl</span>
-            <div id="polyAl-count" class="value">0g</div>
-          </div>
-          <div class="stat-item">
-            <span class="label">Papel</span>
-            <div id="papel-count" class="value">0g</div>
-          </div>
-        </div>
+  <div id="root">
+    <div id="hud">
+      <div id="hud-left">
+        <div id="blocks-big">00</div>
+        <div id="hud-label">ENVASES<br>RECICLADOS</div>
       </div>
-      <div id="fps-counter"
-        style="position: fixed; bottom: 2rem; right: 2rem; font-family: var(--font-mono); font-size: 10px; color: rgba(255,255,255,0.3); letter-spacing: 0.1em; pointer-events: none;">
-        FPS: 0</div>
+      <div class="hud-stat">
+        <div class="hud-stat-value" id="papel-count">000g</div>
+        <div class="hud-stat-label">PAPEL</div>
+      </div>
+      <div class="hud-stat">
+        <div class="hud-stat-value" id="polyal-count">000g</div>
+        <div class="hud-stat-label">PolyAl</div>
+      </div>
     </div>
 
-    <div class="canvas-container" id="canvas-container">
-      <canvas id="game-canvas"></canvas>
+    <div id="fps">FPS: --</div>
+    <canvas id="game-canvas"></canvas>
+    <div id="floating-layer"></div>
 
-      <div id="idle-overlay" class="overlay">
-        <div class="waiting-hint">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"
-            stroke-linecap="round" stroke-linejoin="round">
-            <polygon points="5 3 19 12 5 21 5 3"></polygon>
-          </svg>
-          Mueve el joystick para jugar...
-        </div>
+    <div id="idle-overlay">
+      <div class="idle-instruction">Mueve el joystick<br>para comenzar a<br>reciclar los envases</div>
+    </div>
+
+    <div id="post-game">
+      <div id="screen-congrats" class="screen">
+        <div id="congrats-msg"></div>
+        <div id="congrats-bricks"></div>
       </div>
 
-      <div id="gameover-overlay" class="overlay gameover hidden">
-        <div class="gameover-content">
-          Por cada
-          <div class="final-score" id="final-blocks">0</div> envases,</br> ALIER recycla <div class="final-score" id="final-blocks">0</div> envases <br>
-          <p> en <span id="final-polyAl">0</span> de polyAL y <span id="final-papel">0</span> de Papel.</p>
-          <div class="timer-container">
-            <div class="progress-bar">
-              <div id="progress-fill" class="progress-fill"></div>
+      <div id="screen-info" class="screen">
+        <div id="info-top">
+          <div class="info-half">
+            <div class="info-por-cada" id="ip1">Por cada</div>
+            <div class="info-big-num" id="ib1">
+              <span class="n" id="info-produced-count">60</span>
+              <div class="info-num-label">ENVASES<br>PRODUCIDOS</div>
             </div>
-            <span id="timer-text" class="timer-text">Reiniciando en 10s</span>
+          </div>
+          <div class="info-half">
+            <div class="info-por-cada" id="ip2">Alier garantiza</div>
+            <div class="info-big-num" id="ib2">
+              <span class="n" id="info-recycled-count">60</span>
+              <div class="info-num-label">ENVASES<br>RECYCLADOS</div>
+            </div>
+          </div>
+        </div>
+        <div class="info-bottom">
+          <div class="info-transform-label" id="itl">Transformados en</div>
+          <div class="info-materials">
+            <div class="info-material" id="mat-papel">
+              <svg viewBox="0 0 354.7 346" xmlns="http://www.w3.org/2000/svg">
+                <polygon fill="none" stroke="#fff" stroke-width="3" stroke-miterlimit="10"
+                  points="23 205.7 141.8 142.8 312 261 193.1 323.9 23 205.7" />
+                <polygon fill="none" stroke="#fff" stroke-width="3" stroke-miterlimit="10"
+                  points="23 185.8 141.8 122.9 312 241.1 193.1 304 23 185.8" />
+                <polygon fill="none" stroke="#fff" stroke-width="3" stroke-miterlimit="10"
+                  points="23 165.9 141.8 103 312 221.2 193.1 284.1 23 165.9" />
+                <polygon fill="none" stroke="#fff" stroke-width="3" stroke-miterlimit="10"
+                  points="23 146 141.8 83.1 312 201.3 193.1 264.2 23 146" />
+                <polygon fill="none" stroke="#fff" stroke-width="3" stroke-miterlimit="10"
+                  points="23 126.1 141.8 63.2 312 181.4 193.1 244.3 23 126.1" />
+                <polygon fill="none" stroke="#fff" stroke-width="3" stroke-miterlimit="10"
+                  points="23 106.2 141.8 43.4 312 161.6 193.1 224.4 23 106.2" />
+                <polygon fill="none" stroke="#fff" stroke-width="3" stroke-miterlimit="10"
+                  points="23 85.4 141.8 22.6 312 140.8 193.1 203.6 23 85.4" />
+              </svg>
+              <div class="info-material-num"><span id="info-papel-grams">0</span><span class="info-material-unit">g DE
+                  PAPEL</span></div>
+            </div>
+            <div class="info-material" id="mat-polyal">
+              <svg viewBox="0 0 354.7 346" xmlns="http://www.w3.org/2000/svg">
+                <circle fill="none" stroke="#fff" stroke-width="3" cx="116.6" cy="149.8" r="12.9" />
+                <circle fill="none" stroke="#fff" stroke-width="3" cx="126.1" cy="167.7" r="12.9" />
+                <circle fill="none" stroke="#fff" stroke-width="3" cx="146.3" cy="190.4" r="12.9" />
+                <circle fill="none" stroke="#fff" stroke-width="3" cx="162.2" cy="157.8" r="12.9" />
+                <circle fill="none" stroke="#fff" stroke-width="3" cx="173.3" cy="127.3" r="12.9" />
+                <circle fill="none" stroke="#fff" stroke-width="3" cx="214.1" cy="146.8" r="12.9" />
+                <circle fill="none" stroke="#fff" stroke-width="3" cx="197.2" cy="177.5" r="12.9" />
+                <circle fill="none" stroke="#fff" stroke-width="3" cx="178.7" cy="212.2" r="12.9" />
+                <circle fill="none" stroke="#fff" stroke-width="3" cx="178.7" cy="180.3" r="12.9" />
+                <circle fill="none" stroke="#fff" stroke-width="3" cx="219" cy="196.9" r="12.9" />
+                <circle fill="none" stroke="#fff" stroke-width="3" cx="229.2" cy="168.9" r="12.9" />
+                <circle fill="none" stroke="#fff" stroke-width="3" cx="247.4" cy="133" r="12.9" />
+                <circle fill="none" stroke="#fff" stroke-width="3" cx="142.5" cy="120.1" r="12.9" />
+                <circle fill="none" stroke="#fff" stroke-width="3" cx="103.6" cy="179.3" r="12.9" />
+                <circle fill="none" stroke="#fff" stroke-width="3" cx="137.2" cy="223.9" r="12.9" />
+                <circle fill="none" stroke="#fff" stroke-width="3" cx="208" cy="232.5" r="12.9" />
+                <circle fill="none" stroke="#fff" stroke-width="3" cx="249.3" cy="215.9" r="12.9" />
+                <circle fill="none" stroke="#fff" stroke-width="3" cx="281.7" cy="138" r="12.9" />
+                <circle fill="none" stroke="#fff" stroke-width="3" cx="268.5" cy="95.8" r="12.9" />
+                <circle fill="none" stroke="#fff" stroke-width="3" cx="180.2" cy="93.7" r="12.9" />
+                <circle fill="none" stroke="#fff" stroke-width="3" cx="83.6" cy="166.9" r="12.9" />
+                <circle fill="none" stroke="#fff" stroke-width="3" cx="67.1" cy="136.8" r="12.9" />
+                <circle fill="none" stroke="#fff" stroke-width="3" cx="41.6" cy="200.5" r="12.9" />
+                <circle fill="none" stroke="#fff" stroke-width="3" cx="258" cy="254.4" r="12.9" />
+                <circle fill="none" stroke="#fff" stroke-width="3" cx="237.6" cy="73.8" r="12.9" />
+                <circle fill="none" stroke="#fff" stroke-width="3" cx="182.5" cy="147.1" r="12.9" />
+                <circle fill="none" stroke="#fff" stroke-width="3" cx="141.6" cy="78.9" r="12.9" />
+                <circle fill="none" stroke="#fff" stroke-width="3" cx="166" cy="224.3" r="12.9" />
+                <circle fill="none" stroke="#fff" stroke-width="3" cx="155.8" cy="297.6" r="12.9" />
+                <circle fill="none" stroke="#fff" stroke-width="3" cx="76.2" cy="265.2" r="12.9" />
+                <circle fill="none" stroke="#fff" stroke-width="3" cx="303.5" cy="217.5" r="12.9" />
+                <circle fill="none" stroke="#fff" stroke-width="3" cx="189.8" cy="52.8" r="12.9" />
+              </svg>
+              <div class="info-material-num"><span id="info-polyal-grams">0</span><span class="info-material-unit">g DE
+                  PolyAl</span></div>
+            </div>
           </div>
         </div>
       </div>
+
+      <div id="screen-closing" class="screen">
+        <div class="closing-line" id="cl1">Esto no es un juego,<br>es una realidad.</div>
+        <div class="closing-line" id="cl2">Creemos negocios<br>sostenibles juntos.</div>
+      </div>
+    </div>
+
+    <div id="reset-bar">
+      <div id="reset-bar-fill"></div>
     </div>
   </div>
 
-  <div class="edge-glow"></div>
-  </div>
-  <script type="module" src="/src/game.ts"></script>
 </body>
 
 </html>

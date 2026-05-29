@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Block Breaker</title>
+  <link rel="stylesheet" href="src/style.scss" />
+</head>
+
+<body>
+  <div id="game-root">
+    <div class="dot-grid-overlay"></div>
+
+    <div class="hud">
+      <div class="hud-container">
+
+        <div class="score-center">
+          <div id="blocks-count" class="value">00</div>
+          <div class="label-wrapper">
+            <span class="label">Envases</span>
+            <span class="label">Reciclados</span>
+          </div>
+        </div>
+
+        <div class="right-stats">
+          <div class="stat-item">
+            <div id="polyAl-count" class="value">0g</div>
+            <span class="label">polyAl</span>
+          </div>
+          <div class="stat-item">
+            <div id="papel-count" class="value">0g</div>
+            <span class="label">Papel</span>
+          </div>
+        </div>
+      </div>
+      <div id="fps-counter"
+        style="position: fixed; bottom: 2rem; right: 2rem; font-family: var(--font-mono); font-size: 10px; color: rgba(255,255,255,0.3); letter-spacing: 0.1em; pointer-events: none;">
+        FPS: 0</div>
+    </div>
+
+    <div class="canvas-container" id="canvas-container">
+      <canvas id="game-canvas"></canvas>
+
+      <div id="idle-overlay" class="overlay">
+        <div class="waiting-hint">
+          <!-- <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"
+            stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="5 3 19 12 5 21 5 3"></polygon>
+          </svg> -->
+          Mueve el joystick para juger y reciclar los envases.
+        </div>
+      </div>
+
+      <div id="gameover-overlay" class="overlay gameover hidden">
+        <div class="gameover-content">
+          Por cada
+          <div class="final-score" id="final-blocks">0</div> envases,</br> ALIER recycla <div class="final-score"
+            id="final-blocks">0</div> envases <br>
+          <p> en <span id="final-polyAl">0</span> de polyAL y <span id="final-papel">0</span> de Papel.</p>
+          <div class="timer-container">
+            <div class="progress-bar">
+              <div id="progress-fill" class="progress-fill"></div>
+            </div>
+            <span id="timer-text" class="timer-text">Reiniciando en 10s</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="edge-glow"></div>
+  </div>
+  <script type="module" src="/src/game.ts"></script>
+</body>
+
+</html>
