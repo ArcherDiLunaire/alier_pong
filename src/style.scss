@@ -45,6 +45,11 @@ body {
   height: 100%;
   overflow: hidden;
   background: $bg-color;
+  background-image: url("/noise.png");
+  background-size:
+    150px,
+    100% 100vh;
+  background-attachment: fixed;
 }
 #root {
   width: 100vw;
@@ -158,10 +163,11 @@ body {
   height: calc(100% - $hud-height);
   top: $hud-height;
   background-color: #ff3b61;
-}
-
-.screen {
-  background-color: #ff3b61;
+  background-image: url("/noise.png");
+  background-size:
+    150px,
+    100% 100vh;
+  background-attachment: fixed;
 }
 
 #screen-congrats {
@@ -235,7 +241,9 @@ body {
   font-size: 45px;
   opacity: 0;
   transform: translateY(15px);
-  transition: opacity 0.5s ease, transform 0.5s ease;
+  transition:
+    opacity 0.5s ease,
+    transform 0.5s ease;
   color: rgba(255, 255, 255, 0.8);
 }
 .info-big-num {
@@ -273,7 +281,9 @@ body {
   font-size: 45px;
   opacity: 0;
   transform: translateY(15px);
-  transition: opacity 0.5s ease, transform 0.5s ease;
+  transition:
+    opacity 0.5s ease,
+    transform 0.5s ease;
   color: rgba(255, 255, 255, 0.8);
 }
 .info-materials {
