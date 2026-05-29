@@ -61,8 +61,8 @@ let blocksCount = 0, polyAlCount = 0, papelCount = 0;
 let gameState = 'IDLE';
 let keys = new Set();
 let frameCount = 0, fpsLast = 0;
-let left = null;
-let right = null;
+let left = false;
+let right = false;
 
 const blocksEl = document.getElementById('blocks-big');
 const papelEl = document.getElementById('papel-count');
