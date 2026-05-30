@@ -20,7 +20,8 @@ $text-color: #ffffff;
 $font-sans: "Arial", ui-sans-serif, system-ui, sans-serif;
 $font-bold: "Maxeville-Bold", ui-sans-serif, system-ui, sans-serif;
 $font-construct: "Maxeville-Construct", ui-sans-serif, system-ui, sans-serif;
-$hud-height: 160px;
+$hud-height: 320px;
+$stroke: 4px;
 
 @keyframes pulse {
   0%,
@@ -47,7 +48,7 @@ body {
   background: $bg-color;
   background-image: url("/noise.png");
   background-size:
-    150px,
+    300px,
     100% 100vh;
   background-attachment: fixed;
 }
@@ -69,54 +70,53 @@ body {
   height: $hud-height;
   display: flex;
   align-items: stretch;
-  border-bottom: 1.5px solid rgba(255, 255, 255, 1);
+  border-bottom: $stroke solid rgba(255, 255, 255, 1);
   z-index: 10;
 }
 #hud-left {
   display: flex;
   align-items: center;
-  gap: 16px;
-  padding: 0 32px;
+  gap: 50px;
+  padding: 0 64px;
   flex: 1;
 }
 #blocks-big {
   font-family: $font-construct;
-  font-size: 135px;
+  font-size: 240px;
   line-height: 1;
-  padding: 20px 0;
+  padding: 40px 0;
 }
 #hud-label {
   font-family: $font-bold;
-  font-size: 54px;
+  font-size: 95px;
   line-height: 1;
   text-transform: uppercase;
-  letter-spacing: 1px;
 }
 .hud-stat {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 0 40px;
-  border-left: 1.5px solid rgba(255, 255, 255, 1);
-  min-width: 200px;
+  padding: 0 80px;
+  border-left: $stroke solid rgba(255, 255, 255, 1);
+  min-width: 400px;
 }
 .hud-stat-value {
   font-family: $font-construct;
-  font-size: 75px;
+  font-size: 150px;
   line-height: 1;
 }
 .hud-stat-label {
   font-family: $font-bold;
-  font-size: 25px;
+  font-size: 50px;
   // opacity: 0.7;
-  margin-top: 2px;
+  margin-top: 4px;
 }
 
 #fps {
   position: absolute;
-  bottom: 4px;
-  left: 8px;
-  font-size: 30px;
+  bottom: 8px;
+  left: 16px;
+  font-size: 60px;
   opacity: 0.3;
   z-index: 20;
   font-family: monospace;
@@ -139,7 +139,7 @@ body {
   display: flex;
   align-items: flex-end;
   justify-content: flex-end;
-  padding: 48px 56px;
+  padding: 96px 112px;
   z-index: 5;
   pointer-events: none;
 }
@@ -148,7 +148,7 @@ body {
 }
 .idle-instruction {
   font-family: $font-sans;
-  font-size: 55px;
+  font-size: 110px;
   text-align: right;
   animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
@@ -165,7 +165,7 @@ body {
   background-color: #ff3b61;
   background-image: url("/noise.png");
   background-size:
-    150px,
+    300px,
     100% 100vh;
   background-attachment: fixed;
 }
@@ -181,29 +181,29 @@ body {
 }
 
 #congrats-msg {
-  padding: 60px;
+  padding: 120px;
   font-family: $font-sans, sans-serif;
-  font-size: 55px;
+  font-size: 110px;
   width: 100%;
   text-align: center;
-  border-bottom: 1.5px solid rgba(255, 255, 255, 1);
+  border-bottom: $stroke solid rgba(255, 255, 255, 1);
 }
 #congrats-bricks {
   flex: 1;
-  padding: 60px;
+  padding: 120px;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 6px;
+  gap: 12px;
   overflow: hidden;
 }
 .brick-row {
   display: flex;
-  gap: 6px;
+  gap: 12px;
 }
 .brick-icon {
   opacity: 0;
-  transform: translateY(18px);
+  transform: translateY(36px);
   transition:
     opacity 0.25s ease,
     transform 0.25s ease;
@@ -226,69 +226,69 @@ body {
 #info-top {
   display: flex;
   justify-content: center;
-  border-bottom: 1.5px solid rgba(255, 255, 255, 1);
+  border-bottom: $stroke solid rgba(255, 255, 255, 1);
   flex-shrink: 0;
-  gap: 50px;
+  gap: 100px;
 }
 .info-half {
-  padding: 40px;
+  padding: 80px;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 12px;
 }
 .info-por-cada {
   font-family: $font-sans;
-  font-size: 45px;
+  font-size: 90px;
   opacity: 0;
-  transform: translateY(15px);
+  transform: translateY(30px);
   transition:
     opacity 0.5s ease,
     transform 0.5s ease;
-  color: rgba(255, 255, 255, 0.8);
+  color: rgba(255, 255, 255, 1);
 }
 .info-big-num {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 24px;
   opacity: 0;
-  transform: translateY(15px);
+  transform: translateY(30px);
   transition:
     opacity 0.5s ease,
     transform 0.5s ease;
 }
 .info-big-num .n {
   font-family: $font-construct;
-  font-size: 135px;
+  font-size: 270px;
   line-height: 1;
 }
 .info-num-label {
   font-family: $font-bold;
-  font-size: 54px;
+  font-size: 115px;
   line-height: 1;
   text-transform: uppercase;
-  letter-spacing: 1px;
 }
+
 .info-bottom {
   // flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 60px;
+  padding: 120px;
 }
 .info-transform-label {
   font-family: $font-sans;
-  font-size: 45px;
+  font-size: 90px;
   opacity: 0;
-  transform: translateY(15px);
+  transform: translateY(30px);
   transition:
     opacity 0.5s ease,
     transform 0.5s ease;
-  color: rgba(255, 255, 255, 0.8);
+  color: rgba(255, 255, 255, 1);
 }
 .info-materials {
   display: flex;
-  gap: 80px;
+  gap: 160px;
   align-items: flex-start;
   justify-content: center;
 }
@@ -296,27 +296,27 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 12px;
+  gap: 24px;
   opacity: 0;
-  transform: translateY(22px);
+  transform: translateY(44px);
   transition:
     opacity 0.6s ease,
     transform 0.6s ease;
 }
 .info-material svg {
-  width: 320px;
+  width: 640px;
   height: 100%;
 }
 .info-material-num {
   font-family: $font-construct;
-  font-size: 75px;
+  font-size: 150px;
   display: flex;
   align-items: baseline;
 }
 
 .info-material-unit {
   font-family: $font-bold;
-  font-size: 35px;
+  font-size: 70px;
 }
 
 /* Screen 3 */
@@ -327,16 +327,16 @@ body {
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  gap: 24px;
+  gap: 48px;
   opacity: 0;
   transition: opacity 1s ease;
 }
 .closing-line {
   font-family: $font-sans;
-  font-size: 55px;
+  font-size: 110px;
   text-align: center;
   opacity: 0;
-  transform: translateY(20px);
+  transform: translateY(40px);
   transition:
     opacity 0.7s ease,
     transform 0.7s ease;
@@ -348,7 +348,7 @@ body {
   bottom: 0;
   left: 0;
   right: 0;
-  height: 4px;
+  height: 8px;
   background: rgba(255, 255, 255, 0.2);
   z-index: 30;
   display: none;

@@ -1,13 +1,13 @@
 // ---- Constants ----
-const PADDLE_WIDTH = 200;
-const PADDLE_HEIGHT = 16;
-const BALL_RADIUS = 20;
-const INITIAL_BALL_SPEED = 6;
-const SPEED_INCREMENT = 0.003;
-const MAX_SPEED = 20;
+const PADDLE_WIDTH = 500;
+const PADDLE_HEIGHT = 40;
+const BALL_RADIUS = 40;
+const INITIAL_BALL_SPEED = 10;
+const SPEED_INCREMENT = 0.01;
+const MAX_SPEED = 40;
+const PADDLE_SPEED = 20;
 const POLYAL_CONV = 9.6;
 const PAPEL_CONV = 22.4;
-const PADDLE_SPEED = 10;
 
 // Envase SVG proportions: viewBox 0 0 62.7 124.5  → aspect ~0.5035 (width/height)
 const ENVASE_ASPECT = 62.7 / 124.5; // ~0.503
@@ -96,7 +96,7 @@ function initBricks() {
 
 function resetBall() {
   ballX = width / 2;
-  ballY = height - 80;
+  ballY = height - PADDLE_HEIGHT - 40 - BALL_RADIUS - 1;
   ballDX = (Math.random() > 0.5 ? 1 : -1) * (0.4 + Math.random() * 0.4);
   ballDY = -1;
   ballSpeed = INITIAL_BALL_SPEED;
@@ -128,27 +128,27 @@ function updateHUD() {
 function spawnFloat(x, y, text) {
   const el = document.createElement('div');
   el.style.cssText = `position:absolute;
-    left:${x}px;top:${y + 100}px;
+    left:${x}px;top:${y + 300}px;
     transform:translateX(-50%);
     font-family:Arial, sans-serif;
-    font-size:30px;
+    font-size:80px;
     color:#fff;
     line-height: 1;
     white-space:nowrap;
     pointer-events:none;
-    transition:opacity 1.5s ease,transform 1.5s ease;`;
+    transition:opacity 2s ease,transform 2s ease;`;
   el.textContent = text;
   floatingLayer.appendChild(el);
   requestAnimationFrame(() => {
-    el.style.transform = 'translateX(-50%) translateY(-50px)';
+    el.style.transform = 'translateX(-50%) translateY(-200px)';
     el.style.opacity = '0';
   });
-  setTimeout(() => el.remove(), 1500);
+  setTimeout(() => el.remove(), 2000);
 }
 
 function addFloat(x, y, count) {
   spawnFloat(x, y - 10, `+${(POLYAL_CONV * count).toFixed(1)}g POLYAL`);
-  spawnFloat(x, y - 50, `+${(PAPEL_CONV * count).toFixed(1)}g PAPEL`);
+  spawnFloat(x, y - 120, `+${(PAPEL_CONV * count).toFixed(1)}g PAPEL`);
 }
 
 // ---- Draw ----
@@ -156,7 +156,7 @@ function draw() {
   ctx.clearRect(0, 0, width, height);
 
   ctx.strokeStyle = 'rgba(255,255,255)';
-  ctx.lineWidth = 2;
+  ctx.lineWidth = 4;
   ctx.lineCap = 'round';
   ctx.lineJoin = 'round';
 
@@ -254,8 +254,8 @@ function buildBrickGrid(total) {
   container.innerHTML = '';
 
   // Fill available width, figure out how many cols fit at a nice size
-  const availW = window.innerWidth * 0.8;
-  const iconH = 180;
+  const availW = window.innerWidth * 0.9;
+  const iconH = 440; // fixed height for all icons, scale width by aspect
   const iconW = Math.round(iconH * ENVASE_ASPECT);
   const gap = 6;
   const cols = Math.floor((availW + gap) / (iconW + gap));
@@ -367,8 +367,6 @@ function gameOver() {
       animateInfoScreen();
     }, 1000);
   }, cascadeDuration);
-
-  // return;
 
   // SCREEN 3: closing message
   const infoVisible = cascadeDuration + 7500;
