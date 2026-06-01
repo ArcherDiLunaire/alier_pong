@@ -3,7 +3,7 @@
   font-style: normal;
   src:
     local("Maxeville-Bold"),
-    url(fonts/Maxeville-Bold.otf) format("opentype");
+    url(./assets/Maxeville-Bold.otf) format("opentype");
 }
 
 @font-face {
@@ -11,7 +11,7 @@
   font-style: normal;
   src:
     local("Maxeville-Construct"),
-    url(fonts/Maxeville-Construct.otf) format("opentype");
+    url(./assets/Maxeville-Construct.otf) format("opentype");
 }
 
 // Variables
@@ -46,11 +46,6 @@ body {
   height: 100%;
   overflow: hidden;
   background: $bg-color;
-  background-image: url("/noise.png");
-  background-size:
-    300px,
-    100% 100vh;
-  background-attachment: fixed;
 }
 #root {
   width: 100vw;
@@ -120,6 +115,7 @@ body {
   opacity: 0.3;
   z-index: 20;
   font-family: monospace;
+  display: none;
 }
 
 #game-canvas {
@@ -163,11 +159,6 @@ body {
   height: calc(100% - $hud-height);
   top: $hud-height;
   background-color: #ff3b61;
-  background-image: url("/noise.png");
-  background-size:
-    300px,
-    100% 100vh;
-  background-attachment: fixed;
 }
 
 #screen-congrats {

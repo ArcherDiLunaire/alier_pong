@@ -3,9 +3,9 @@ const PADDLE_WIDTH = 500;
 const PADDLE_HEIGHT = 40;
 const BALL_RADIUS = 40;
 const INITIAL_BALL_SPEED = 10;
-const SPEED_INCREMENT = 0.01;
+const SPEED_INCREMENT = 0.007;
 const MAX_SPEED = 40;
-const PADDLE_SPEED = 20;
+const PADDLE_SPEED = 30;
 const POLYAL_CONV = 9.6;
 const PAPEL_CONV = 22.4;
 
